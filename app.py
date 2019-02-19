@@ -3,7 +3,6 @@ from classes_db import *
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
 from flask import Flask,render_template,request,make_response,jsonify
 from flask_cors import CORS
 
@@ -11,7 +10,7 @@ app = Flask(__name__)
 cors = CORS(app)
 
 
-@app.route('/')
+@app.route('/todos')
 def todos():
     if request.method == 'GET':
         todos = [
@@ -31,16 +30,13 @@ def todos():
         ]
         return jsonify(todos)
    
-if __name__ == '__main__':
-    app.run(debug =True)
-=======
-
 @app.route("/")
 def index():
     return render_template("index.html")
     
 @app.route("/taskadded", methods = ["POST"])
 def add_task():
+    
     form_data = request.form
     task = form_data["task_title"]
     task_desc = form_data["task_desc"]
@@ -64,4 +60,3 @@ def add_task():
 
 if __name__ == "__main__":
     app.run(debug=True)
->>>>>>> be1d38eafd9487c67e7b95c82500f4932de745ae

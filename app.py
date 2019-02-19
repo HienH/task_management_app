@@ -9,11 +9,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 cors = CORS(app)
 
-
-@app.route('/todos')
-def todos():
-    if request.method == 'GET':
-        todos = [
+todos = [
         { "id": 0,
          "title": "First Task",
          "description": "this is the first description",
@@ -21,15 +17,33 @@ def todos():
          "status": 0,
          "date": "01-01-2019"
          }, {
-         "id": 0,
+         "id": 1,
          "title": "First Task",
          "description": "this is the first description",
          "important": 0,
          "status": 0,
-         "date": "01-01-2019"},
+         "date": "03-02-2019"},
+          {
+         "id": 2,
+         "title": "third Task",
+         "description": "this is the third description",
+         "important": 1,
+         "status": 1,
+         "date": "02-02-2019"},
         ]
-        return jsonify(todos)
-   
+
+@app.route('/todos',methods = ['GET'])
+def alltodos():
+    return jsonify(todos)
+
+#GET INDIVIUDAL TASK API
+@app.route('/todos/<int:id>',methods = ['GET'])
+def get_todo(id):
+    for todo in todos:
+        if(id == todo["id"]):
+            return jsonify(todo),200
+    return "Todo not found",404
+       
 @app.route("/")
 def index():
     return render_template("index.html")

@@ -1,18 +1,15 @@
 
-from database import *
-<<<<<<< HEAD
-from flask import Flask, render_template, request,jsonify
-=======
+from db_functions import *
+
 import datetime
 from flask import Flask, render_template, request, jsonify
->>>>>>> frontend
 from flask_cors import CORS
 
 app = Flask(__name__)
 cors = CORS(app)
 
 #---------Connect Flask to database----------------#
-app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:////c/Users/RN/FINAL_PROJECTS/task_management_app/taskdatabase.db'
+app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:///taskmanager.db'
 
 # db = sqlalchemy(app)
 

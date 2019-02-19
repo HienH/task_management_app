@@ -1,33 +1,15 @@
-from flask import Flask, render_template, request
-from classes_db import *
 
-app = Flask(__name__)
+from database import *
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 cors = CORS(app)
 
-todos = [
-        { "id": 0,
-         "title": "First Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-         "date": "01-01-2019"
-         }, {
-         "id": 1,
-         "title": "First Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-         "date": "03-02-2019"},
-          {
-         "id": 2,
-         "title": "third Task",
-         "description": "this is the third description",
-         "important": 1,
-         "status": 1,
-         "date": "02-02-2019"},
-        ]
+#---------Connect Flask to database----------------#
+app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:////c/Users/RN/FINAL_PROJECTS/task_management_app/taskdatabase.db'
+
+# db = sqlalchemy(app)
+
 
 @app.route('/todos',methods = ['GET','POST'])
 def alltodos():
@@ -63,10 +45,13 @@ def get_todo(id):
             return jsonify(todo),200
     return "Todo not found",404
        
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
     
+ 
 #@app.route("/taskadded", methods = ["POST"])
 #def add_task():
 #    
@@ -82,5 +67,7 @@ def index():
 #
 
 
+
 if __name__ == "__main__":
     app.run(debug=True)
+

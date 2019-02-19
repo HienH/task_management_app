@@ -3,8 +3,6 @@ from classes_db import *
 
 app = Flask(__name__)
 
-from flask import Flask,render_template,request,make_response,jsonify
-from flask_cors import CORS
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -50,7 +48,6 @@ def index():
     
 @app.route("/taskadded", methods = ["POST"])
 def add_task():
-    
     form_data = request.form
     task = form_data["task_title"]
     task_desc = form_data["task_desc"]

@@ -1,6 +1,7 @@
 
 from database import *
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -9,6 +10,29 @@ cors = CORS(app)
 app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:////c/Users/RN/FINAL_PROJECTS/task_management_app/taskdatabase.db'
 
 # db = sqlalchemy(app)
+
+todos = [
+        { "id": 0,
+         "title": "First Task",
+         "description": "this is the first description",
+         "important": 0,
+         "status": 0,
+         "date": "01-01-2019"
+         }, {
+         "id": 1,
+         "title": "First Task",
+         "description": "this is the first description",
+         "important": 0,
+         "status": 0,
+         "date": "03-02-2019"},
+          {
+         "id": 2,
+         "title": "third Task",
+         "description": "this is the third description",
+         "important": 1,
+         "status": 1,
+         "date": "02-02-2019"},
+        ]
 
 
 @app.route('/todos',methods = ['GET','POST'])
@@ -30,11 +54,10 @@ def alltodos():
             'description' : form_data["task_desc"],
             'important' : result,
             'status' : 0,
-            'data' :"01-02-99"
+            'data' :form_data["due_date"]
         }
         todos.append(todo)
-        return jsonify(todos)
-        
+        return jsonify(todos)        
 
 #GET INDIVIUDAL TASK API
         

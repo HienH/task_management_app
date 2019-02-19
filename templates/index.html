@@ -5,73 +5,73 @@
 
 <head>
   <meta charset="UTF-8">
-<title> Task manager app</title>
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> -->
+  <title> Task manager app</title>
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> -->
 
-<!-- Latest compiled and minified CSS -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <!-- Latest compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 Bootstrap core CSS -->
 
-<link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/style.css") }}">
+  <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/style.css") }}">
 
 </head>
 
   <body>
 <h1>Welcome to your to-do list</h1>
 
-<div class="newtask">
+<div class="
+    newtask">
 
-<h2>Add a new task below</h2>
+  <h2>Add a new task below</h2>
 
-
-
-<form method = "post" action="/taskadded">
-  Task title:
-  <input type="text" name="task_title" value="">
-  Task description:
-  <input type="text" name="task_desc" value="">
-<input type="checkbox" name="checkbox" value="checked">Important
-  <input type="submit" value="Add task">
-</form> 
-
-<ol>
-  <li>Task: {{task}} Importance: {{importance}}</li>
-   </ol>
+  <form method="post" action="/todos">
+    Task title:
+    <input type="text" name="task_title" value="">
+    Task description:
+    <input type="text" name="task_desc" value="">
+    <input type="checkbox" name="checkbox" value="checked">Important
+    Date: <input type="date" name="due_date">
+    <input type="submit" value="Add task">
+  </form>
 
   <!-- <ol>
+    <li>Task: {{task}} Importance: {{importance}}</li>
+  </ol>
+  <ol>
     {% for item in task %}
       <li>{{task}} </li>
       <li> {{task}}</li>
       {% endfor %}
       </ol> -->
-
-<p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important: {{importance}}</p>
-<h2>Normal table:</h2>
-<table>
+  <!-- 
+  <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important:
+    {{importance}}</p>
+  <h2>Normal table:</h2>
+  <table>
     <tr>
       <th>Task </th>
       <th>Description</th>
       <th>Important</th>
-        </tr>
-      
-      <tr>
-          <td> {{ task }}</td>
-          <td> {{ task_desc }}</td>
-          <td> {{ importance }}</td>
-        </tr>
-  
+    </tr>
+
+    <tr>
+      <td> {{ task }}</td>
+      <td> {{ task_desc }}</td>
+      <td> {{ importance }}</td>
+    </tr>
+
   </table>
 
 
 
-<h2>Failing For loop:</h2>
-<table>
+  <h2>Failing For loop:</h2>
+  <table>
     <tr>
       <th>Task </th>
       <th>Description</th>
       <th>Importance</th>
-        </tr>
-        {% for item in task %}
+    </tr>
+    {% for item in task %}
     <tr>
       <td> {{ item[0] }}</td>
       <td> {{ item[1] }}</td>
@@ -80,20 +80,21 @@ Bootstrap core CSS -->
     {% endfor %}
     {% for item in task_desc %}
     <tr>
-        <td> {{ item[0] }}</td>
-        <td> {{ item[1] }}</td>
-        <td> {{ item[2] }}</td>
-      </tr>
-      {% endfor %}
-      {% for item in importance %}
-      <tr>
-          <td> {{ item[0] }}</td>
-          <td> {{ item[1] }}</td>
-          <td> {{ item[2] }}</td>
-        </tr>
-        {% endfor %}
-  </table>
-  
+      <td> {{ item[0] }}</td>
+      <td> {{ item[1] }}</td>
+      <td> {{ item[2] }}</td>
+    </tr>
+    {% endfor %}
+    {% for item in importance %}
+    <tr>
+      <td> {{ item[0] }}</td>
+      <td> {{ item[1] }}</td>
+      <td> {{ item[2] }}</td>
+    </tr>
+    {% endfor %}
+  </table> -->
+
+
 
   </body>
 

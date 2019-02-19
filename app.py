@@ -3,40 +3,13 @@ from classes_db import *
 
 app = Flask(__name__)
 
-from flask import Flask,render_template,request,make_response,jsonify
-from flask_cors import CORS
 
-app = Flask(__name__)
-cors = CORS(app)
-
-
-@app.route('/todos')
-def todos():
-    if request.method == 'GET':
-        todos = [
-        { "id": 0,
-         "title": "First Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-         "date": "01-01-2019"
-         }, {
-         "id": 0,
-         "title": "First Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-         "date": "01-01-2019"},
-        ]
-        return jsonify(todos)
-   
 @app.route("/")
 def index():
     return render_template("index.html")
     
 @app.route("/taskadded", methods = ["POST"])
 def add_task():
-    
     form_data = request.form
     task = form_data["task_title"]
     task_desc = form_data["task_desc"]

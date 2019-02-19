@@ -29,7 +29,11 @@ class Tasks(Base):
         self.status = status
 
 #Adding some data: 
-tasktable = Tasks(2, "task2", "second test task", 0, 0)
+#tasktable = Tasks(1, "task1", "first test task", 0, 0)
 
-session.add(tasktable) #add information to table
-session.commit() #commit
+# session.add(tasktable) #stage information to be added table
+# session.commit() #commit to database (ADD info)
+# session.close()
+
+ins = tasktable.insert()
+str(ins)

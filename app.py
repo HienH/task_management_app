@@ -3,7 +3,6 @@ from classes_db import *
 
 app = Flask(__name__)
 
-
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -30,11 +29,33 @@ todos = [
          "date": "02-02-2019"},
         ]
 
-@app.route('/todos',methods = ['GET'])
+@app.route('/todos',methods = ['GET','POST'])
 def alltodos():
-    return jsonify(todos)
+    if request.method == 'GET':
+        return jsonify(todos)
+    
+    if request.method == 'POST':
+        form_data = request.form
+        result = request.form.getlist("checkbox")
+        
+        if result != []:
+            result = 1
+        else:
+            result= 0 
+        todo = {
+            'id' : todos[-1]['id'] + 1,
+            'title' : form_data["task_title"],
+            'description' : form_data["task_desc"],
+            'important' : result,
+            'status' : 0,
+            'data' :"01-02-99"
+        }
+        todos.append(todo)
+        return jsonify(todos)
+        
 
 #GET INDIVIUDAL TASK API
+        
 @app.route('/todos/<int:id>',methods = ['GET'])
 def get_todo(id):
     for todo in todos:
@@ -46,27 +67,19 @@ def get_todo(id):
 def index():
     return render_template("index.html")
     
-@app.route("/taskadded", methods = ["POST"])
-def add_task():
-    form_data = request.form
-    task = form_data["task_title"]
-    task_desc = form_data["task_desc"]
-    result = request.form.getlist("checkbox")
-    print(result)
-    result2= "".join(result)
-    print (result2)
-    if result2 == "checked":
-        importance = "yes"
-    else:
-        importance = "no"
-    return render_template("index.html", **locals()) 
-    # important = form_data["extras"]
-    # if important == "checked":
-    #     importance = "yes"
-    # else:
-    #     importance = "no"
-    #    
-
+#@app.route("/taskadded", methods = ["POST"])
+#def add_task():
+#    
+#   
+#    
+#    return render_template("index.html", **locals()) 
+#    # important = form_data["extras"]
+#    # if important == "checked":
+#    #     importance = "yes"
+#    # else:
+#    #     importance = "no"
+#    #    
+#
 
 
 if __name__ == "__main__":

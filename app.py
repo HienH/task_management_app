@@ -63,11 +63,16 @@ def alltodos():
         
 @app.route('/todos/<int:id>', methods=['DELETE'])
 def delete_todo(id):
-    for todo in todos:
-        if todo["id"] == id:
-            todos.remove(todo[0])
-        return jsonify({'Done': True})
-      
+    todo =[todo for todo in todos if todo["id"]== id]
+    todos.remove(todo[0])
+    return jsonify(todos)
+    
+@app.route('/todos/<int:id>', methods=['PUT'])
+def update_todo(id):
+    todo =[todo for todo in todos if todo["id"]== id]
+    todos.remove(todo[0])
+    return jsonify(todos)
+    
 
 
 @app.route("/")

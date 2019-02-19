@@ -61,13 +61,13 @@ def alltodos():
 
 #GET INDIVIUDAL TASK API
         
-@app.route('/todos/<int:id>',methods = ['GET'])
-def get_todo(id):
+@app.route('/todos/<int:id>', methods=['DELETE'])
+def delete_todo(id):
     for todo in todos:
-        if(id == todo["id"]):
-            return jsonify(todo),200
-    return "Todo not found",404
-       
+        if todo["id"] == id:
+            todos.remove(todo[0])
+        return jsonify({'Done': True})
+      
 
 
 @app.route("/")

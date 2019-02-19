@@ -18,10 +18,11 @@ def check_db():
     try:
         print(engine.table_names())
         print(repr(tasktable))
+        print("Success! database connected")
     except Exception as e:
         print(e)
 
-
+check_db()
 #------SQL Queries sungin SQLalechemy---------#
 
 
@@ -39,7 +40,7 @@ def print_table_columns():
 def print_all_data():
     for row in results:
         print(row)
-print_all_data()
+#print_all_data()
 
 # first_row = results[0]
 # print(first_row)

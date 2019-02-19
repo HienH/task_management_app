@@ -59,7 +59,6 @@ def alltodos():
             'data' :form_data["due_date"]
         }
         todos.append(todo)
-<<<<<<< HEAD
         return jsonify(todos)        
 
 #GET INDIVIUDAL TASK API
@@ -76,20 +75,7 @@ def update_todo(id):
     todos.remove(todo[0])
     return jsonify(todos)
     
-=======
-        return jsonify(todos)
 
-
-#GET INDIVIUDAL TASK API
-
-@app.route('/todos/<int:id>',methods = ['GET'])
-def get_todo(id):
-    for todo in todos:
-        if(id == todo["id"]):
-            return jsonify(todo),200
-    return "Todo not found",404
-
->>>>>>> frontend
 
 
 @app.route("/")

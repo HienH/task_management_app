@@ -25,18 +25,20 @@ connection = engine.connect()
 
 metadata = MetaData()  #initialise metadata object
 
-mytable = Table("mytable", metadata, autoload=True, autoload_with=engine)
+# mytable = Table("mytable", metadata, autoload=True, autoload_with=engine)
 
 #--------Generation of DB--------------------#
 
-class mytable(db.Model):
-    # __tablename__ = 'mytable'   CHECK THIS
+class Tasktable(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
-    age = db.Column('age', db.Integer)
-    name = db.Column('name', db.String)
+    title = db.Column('title', db.String)
+    description = db.Column('description', db.String)
+    important = db.Column('important', db.Integer)
+    status = db.Column('status', db.Integer)
+    date = db.Column('date', db.String)
 
 
-#---------Databse Add/remove/print data functions -------#
+#---------Database Add/remove/print data functions -------#
 
 stmt = 'SELECT * from mytable'
 results_proxy = connection.execute(stmt)
@@ -65,7 +67,7 @@ def addtask():
 
 @app.route("/complete", methods = ["POST"])
 def add_data():
-    task_title = mytable(name=request.form["task_title"])
+    task_title = Tasktable(title=request.form["task_title"])
     db.session.add(task_title)
     db.session.commit()
     # form_data = request.form
@@ -154,7 +156,7 @@ todos = [
 def check_db():
     try:
         print(engine.table_names())
-        print(repr(mytable))
+        print(repr(tasktable))
         print("Database connected")
     except Exception as e:
         print(e)

@@ -30,56 +30,75 @@ Bootstrap core CSS -->
 
   </header>
 
-<div class="newtask">
+  <div class="newtask">
 
-  <h2>Add a new task below</h2>
+    <button type="button" name="button" onclick="myFunction()" id='new-task-button'><h3 class='home-page-h3'>Add a new task</h3></button>
 
-  <form method="post" action="/todos">
-    Task title:
-    <input type="text" name="task_title" value="">
-    Task description:
-    <input type="text" name="task_desc" value="">
-    <input type="checkbox" name="checkbox" value="checked">Important
-    Date: <input type="date" name="due_date">
-    <input type="submit" value="Add task">
-  </form>
+    <form method="post" action="/todos" id='new-task-form'>
+      Ttitle:
+      <input type="text" name="task_title" value="">
+      Description:
+      <input type="text" name="task_desc" value="">
+      Mark as important?<input type="checkbox" name="checkbox" value='checked'>
+      Due date: <input type="date" name="due_date">
+      <input type="submit" value="Add task">
+    </form>
 
-{{columns}}
+    <script type="text/javascript">
+      function myFunction() {
+        var x = document.getElementById("new-task-form");
+        if (x.style.display === "none") {
+        x.style.display = "block";
+        } else {
+        x.style.display = "none";
+}
+}
+    </script>
 
-  <!-- <ol>
-    <li>Task: {{task}} Importance: {{importance}}</li>
-  </ol>
-  <ol>
-=======
-  <main>
+    <!-- <ol>
+      <li>Task: {{task}} Importance: {{importance}}</li>
+    </ol>
+    <ol>
+      =======
+      <main> -->
 
 
-    <div class="newtask">
+        <!-- <div class="newtask">
 
-      <h2>Add a new task below</h2>
+          <h2>Add a new task below</h2>
 
-      <form method="post" action="/taskadded">
-        Task title:
-        <input type="text" name="task_title" value="">
-        Task description:
-        <input type="text" name="task_desc" value="">
-        <input type="checkbox" name="checkbox" value="checked">Important
-        <input type="submit" value="Add task">
-      </form>
+          <form method="post" action="/taskadded">
+            Task title:
+            <input type="text" name="task_title" value="">
+            Task description:
+            <input type="text" name="task_desc" value="">
+            <input type="checkbox" name="checkbox" value="checked">Important
+            <input type="submit" value="Add task">
+          </form> -->
 
-      <ol>
-        <li>Task: {{task}} Importance: {{importance}}</li>
+          <!-- <ol>
+            <li>Task: {{task}} Importance: {{importance}}</li>
+          </ol>
+
+          <ol> -->
+
+
+<section id='list-tasks'>
+
+
+    <h3 class='home-page-h3'>To-Do List</h3>
+    {% for item in data %}
+      <ol id='task'>
+          <li id='task-title'>{{item['title']}}</li>
+          <li>Due: {{item['date']}}</li>
+          <li>{{item['description']}}</li>
+          <li>Important? {{importance}}</li>
+          <button type="button" name="button" id='remove-task-button'>Task complete? Remove task.</button>
       </ol>
+    {% endfor %}
 
-     <ol>
-
-    {% for item in task %}
-      <li>{{task}} </li>
-      <li> {{task}}</li>
-      {% endfor %}
-      </ol> -->
-
-  <!--
+</section>
+          <!--
   <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important:
     {{importance}}</p>
   <h2>Normal table:</h2>
@@ -131,9 +150,7 @@ Bootstrap core CSS -->
   </table> -->
 
 
-=======
-
-      <!-- <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important: {{importance}}</p>
+          <!-- <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important: {{importance}}</p>
       <h2>Normal table:</h2>
       <table>
         <tr>
@@ -183,20 +200,15 @@ Bootstrap core CSS -->
       </table>
   </main> -->
 
-  <section id='list-tasks'>
-
-  </section>
-
 
 </body>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   url = 'http://127.0.0.1:5000/todos'
 
   fetch(url)
-  .then(response => response.json())
-  .then(json =>document.getElementById('list-tasks').innerHTML=JSON.stringify(json))
-
-</script>
+    .then(response => response.json())
+    .then(json => document.getElementById('list-tasks').innerHTML = JSON.stringify(json))
+</script> -->
 
 </html>

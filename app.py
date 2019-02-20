@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, select
 
+import requests
 import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
@@ -57,15 +58,15 @@ def print_tasks():
 
 #--------- FLASK -------#
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
 
 
-@app.route("/columns")
-def display_columns():
-    columns = table_columns()
-    return render_template("index.html", **locals())
+# @app.route("/columns")
+# def display_columns():
+#     columns = table_columns()
+#     return render_template("index.html", **locals())
 
 #---------Taking user input from front end and adding to db----------#
 @app.route("/addtask")
@@ -92,7 +93,6 @@ def alltodos():
     if request.method == 'POST':
         form_data = request.form
         result = request.form.getlist("checkbox")
-
         if result != []:
             result = 1
         else:
@@ -103,7 +103,7 @@ def alltodos():
             'description' : form_data["task_desc"],
             'important' : result,
             'status' : 0,
-            'data' :form_data["due_date"]
+            'date' :form_data["due_date"]
         }
         todos.append(todo)
         return jsonify(todos)
@@ -124,20 +124,32 @@ def delete_todo(id):
 #    return jsonify(todos)
 #
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
+    #Datetime info for header
     now = datetime.datetime.now()
     current_date = now.strftime('%d-%m-%Y')
     current_time = now.strftime('%H:%M')
     current_month = now.strftime('%B')
+
+    #Displaying specific greeting based on datetime info
     if now.hour < 12:
         greeting = 'good morning'
     elif now.hour >12 and now.hour < 17:
         greeting = 'good afternoon'
     else:
         greeting = 'good evening'
-    return render_template("index.html", **locals())
 
+    #Displaying tasks in table
+    url = 'http://127.0.0.1:5000/todos'
+    response = requests.get(url)
+    data = response.json()
+    for item in data:
+        if item['important'] == 0:
+            importance = 'no'
+        else:
+            importance = 'yes'
+    return render_template("index.html", **locals())
 
 #---------HIEN JSON--------------------#
 todos = [
@@ -147,15 +159,17 @@ todos = [
          "important": 0,
          "status": 0,
          "date": "01-01-2019"
-         }, {
+         },
+
+         {
          "id": 1,
-         "title": "First Task",
+         "title": "Second Task",
          "description": "this is the first description",
          "important": 0,
          "status": 0,
+         "date": "03-02-2019"},
 
-       "date": "03-02-2019"},
-          {
+         {
          "id": 2,
          "title": "third Task",
          "description": "this is the third description",

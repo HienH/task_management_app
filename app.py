@@ -16,7 +16,7 @@ cors = CORS(app)
 app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = sqlalchemy(app)
+db = SQLAlchemy(app)
 
 engine = create_engine('sqlite:///testdb.db')
 
@@ -25,7 +25,7 @@ connection = engine.connect()
 
 metadata = MetaData()  #initialise metadata object
 
-mytable = Table("mytable", metadata, autoload=True, autoload_with=engine) 
+mytable = Table("mytable", metadata, autoload=True, autoload_with=engine)
 
 #--------Generation of DB--------------------#
 
@@ -38,22 +38,22 @@ class mytable(db.Model):
 
 #---------Databse Add/remove/print data functions -------#
 
-stmt = 'SELECT * from mytable' 
+stmt = 'SELECT * from mytable'
 results_proxy = connection.execute(stmt)
 results = results_proxy.fetchall()
 
 def table_columns():
     columns = results[0].keys()
-    #print(columns) 
+    #print(columns)
     return columns
 
-    
+
 def print_tasks():
     first_row = results[0]
     return first_row
 
 #--------- FLASK -------#
-@app.route("/columns")   
+@app.route("/columns")
 def display_columns():
     columns = table_columns()
     return render_template("index.html", **locals())
@@ -82,15 +82,15 @@ def add_data():
 def alltodos():
     if request.method == 'GET':
         return jsonify(todos)
-    
+
     if request.method == 'POST':
         form_data = request.form
         result = request.form.getlist("checkbox")
-        
+
         if result != []:
             result = 1
         else:
-            result= 0 
+            result= 0
         todo = {
             'id' : todos[-1]['id'] + 1,
             'title' : form_data["task_title"],
@@ -100,29 +100,29 @@ def alltodos():
             'data' :form_data["due_date"]
         }
         todos.append(todo)
-        return jsonify(todos)        
+        return jsonify(todos)
 
 #GET INDIVIUDAL TASK API
-        
+
 @app.route('/todos/<int:id>', methods=['DELETE'])
 def delete_todo(id):
     todo =[todo for todo in todos if todo["id"]== id]
     todos.remove(todo[0])
     return jsonify(todos)
-    
+
 
 #@app.route('/todos/<int:id>', methods=['PUT'])
 #def update_todo(id):
 #    todo =[todo for todo in todos if todo["id"]== id]
 #    todos.remove(todo[0])
 #    return jsonify(todos)
-#    
+#
 
 @app.route("/")
 def index():
     return render_template("index.html")
-    
- 
+
+
 #---------HIEN JSON--------------------#
 todos = [
         { "id": 0,
@@ -137,7 +137,7 @@ todos = [
          "description": "this is the first description",
          "important": 0,
          "status": 0,
-   
+
        "date": "03-02-2019"},
           {
          "id": 2,
@@ -157,10 +157,9 @@ def check_db():
         print(repr(mytable))
         print("Database connected")
     except Exception as e:
-        print(e)    
-#check_db()
+        print(e)
+check_db()
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-

@@ -89,12 +89,6 @@ def display_columns():
     columns = table_columns()
     return render_template("index.html", **locals())
 
-
-
-
-
-
-
 #----------------HIEN---------------#
 
 @app.route('/todos',methods = ['GET','POST'])

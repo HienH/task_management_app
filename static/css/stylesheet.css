@@ -67,18 +67,67 @@ main {
 
 header {
   height: 600px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   background-image: url('../images/hero.jpg');
   background-blend-mode: overlay;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
+nav {
+	height: 75px;
+	background: rgba(91, 75,73, 0.5);
+	border-bottom: 2px solid #FFE8E1;
+}
+
+nav ul li {
+	display: inline;
+}
+
+nav ul li a {
+	text-decoration: none;
+	color: #FFE8E1;
+	float: right;
+	margin-right: 50px;
+	margin-top: 30px;
+
+}
+
+nav ul li a:hover {
+	color: #DB93B0;
+}
+
+
+img {
+	margin-top: 25px;
+	float:left;
+	margin-left: 100px;
+	margin-top: 145px;
+	height: 200px;
+	width: auto;
+}
+
+nav img {
+	height: 65px;
+	float: left;
+	margin-left: 50px;
+	margin-top: 5px;
+}
+
+
+#headers {
+	float:right;
+	text-align: right;
+	margin-right: 10px;
+	margin-top: 150px;
+}
+
 h1 {
-  padding-top: 250px;
+  /* padding-top: 250px; */
   width: 100%;
   font-size: 4em;
   color:#FFE8E1;
+	margin-bottom: 10px;
 }
 
 h2 {
@@ -101,14 +150,19 @@ form {
 	padding: 10px 0px;
 }
 
+
 #new-task-form {
 	display: none;
+	background: #F7BFB4;
+	width: 50%;
+	margin: 0 auto;
 }
 
 #new-task-form input{
 	display: block;
 	text-align: center;
 	margin: 5px auto;
+	width: 40%;
 }
 
 #task {
@@ -124,7 +178,7 @@ form {
 	color: #FFE8E1;
 	border: none;
 	padding: 10px;
-	margin: 20px auto;
+	margin-top: 20px auto;
 }
 
 #remove-task-button:hover {
@@ -133,7 +187,8 @@ form {
 }
 
 #new-task-button {
-	margin: 40px auto;
+	margin: 0 auto;
+	margin-top: 40px;
 	background: #5B4B49;
 	color: #FFE8E1;
 	border: none;
@@ -151,4 +206,40 @@ form {
 
 #new-task-button h3:hover {
 	color: #5B4B49;
+}
+
+#new-task-form #submit {
+	background: black;
+	color: #FFE8E1;
+	border: none;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+#new-task-form #submit:hover {
+	background: #6B717E;
+}
+
+@media screen and (min-width: 480px) {
+	.newtask {
+		margin-top: 50px;
+		float: left;
+		width: 50%;
+	}
+
+	#list-tasks {
+		float: right;
+		width: 50%;
+
+	}
+
+	footer {
+		clear: both;
+	}
+}
+
+
+
+footer {
+	height: 100px;
 }

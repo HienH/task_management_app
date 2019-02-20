@@ -24,15 +24,27 @@ Bootstrap core CSS -->
 
 <body>
   <header>
-    <h1>{{greeting}}</h1>
-    <h2>welcome to your to-do list</h2>
-    <h3>{{current_date}} | {{current_time}}</h3>
+    <nav>
+      <ul>
+        <li><img src="../static/images/logo.png" alt="company logo"></li>
+        <li><a href="#footer">contact us</a></li>
+      </ul>
+    </nav>
+    <img src="../static/images/logo.png" alt="company logo">
+    <div id="headers">
 
+      <h1>{{greeting}}</h1>
+      <h2>welcome to your to-do list</h2>
+      <h3>{{current_date}} | {{current_time}}</h3>
+    </div>
   </header>
 
-  <div class="newtask">
+<div class="newtask">
 
-    <button type="button" name="button" onclick="myFunction('new-task-form');" id='new-task-button'><h3 class='home-page-h3'>Add a new task</h3></button>
+
+    <button type="button" name="button" onclick="myFunction('new-task-form');" id='new-task-button'>
+      <h3 class='home-page-h3'>Add a new task</h3>
+    </button>
 
     <form method="post" action="/todos" id='new-task-form'>
       Title:
@@ -41,39 +53,41 @@ Bootstrap core CSS -->
       <input type="text" name="task_desc" value="">
       Mark as important? <input type="checkbox" name="checkbox" value='checked'>
       Due date: <input type="date" name="due_date">
-      <input type="submit" value="Add task">
+      <input type="submit" value="Add task" id='submit'>
     </form>
 
-
-<script type="text/javascript">
-function myFunction() {
-  var x = document.getElementById("new-task-form");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
-</script>
-
-
-<section id='list-tasks'>
+</div>
+    <script type="text/javascript">
+      function myFunction() {
+        var x = document.getElementById("new-task-form");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script>
 
 
-    <h3 class='home-page-h3'>To-Do List</h3>
-    {% for item in data %}
+    <section id='list-tasks'>
+
+
+      <h3 class='home-page-h3'>To-Do List</h3>
+      {% for item in data %}
       <ol id='task'>
-          <li id='task-title'>{{item['title']}}</li>
-          <li>Due: {{item['date']}}</li>
-          <li>{{item['description']}}</li>
-          <li>Important? {{importance}}</li>
-          <button type="button" name="button" id='remove-task-button'>Task complete? Remove task.</button>
+        <li id='task-title'>{{item['title']}}</li>
+        <li>Due: {{item['date']}}</li>
+        <li>{{item['description']}}</li>
+        <li>Important? {{importance}}</li>
+        <button type="button" name="button" id='remove-task-button'>Task complete? Remove task.</button>
       </ol>
-    {% endfor %}
+      {% endfor %}
 
-</section>
+    </section>
 
+    <footer id='footer'>
+      <p>81 Newgate St, London EC1A 7AJ</p>
+    </footer>
 
 </body>
 

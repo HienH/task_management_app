@@ -1,108 +1,79 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block content %}
+<main>
+  <div class="newtask">
+
+    <h2>Add a new task below</h2>
+
+    <form method="post" action="/taskadded">
+      Task title:
+      <input type="text" name="task_title" value="">
+      Task description:
+      <input type="text" name="task_desc" value="">
+      <input type="checkbox" name="checkbox" value="checked">Important
+      <input type="submit" value="Add task">
+    </form>
+
+    <ol>
+      <li>Task: {{task}} Importance: {{importance}}</li>
+    </ol>
+
+    <!-- <ol>
+  {% for item in task %}
+    <li>{{task}} </li>
+    <li> {{task}}</li>
+    {% endfor %}
+    </ol> -->
+
+    <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important: {{importance}}</p>
+    <h2>Normal table:</h2>
+    <table>
+      <tr>
+        <th>Task </th>
+        <th>Description</th>
+        <th>Important</th>
+      </tr>
+
+      <tr>
+        <td> {{ task }}</td>
+        <td> {{ task_desc }}</td>
+        <td> {{ importance }}</td>
+      </tr>
+
+    </table>
 
 
-<html>
 
-<head>
-  <meta charset="UTF-8">
-  <title> Task manager app</title>
-  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> -->
-
-  <!-- Latest compiled and minified CSS -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-Bootstrap core CSS -->
-  <link rel="script" href="/javascript/script.css">
-  <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/stylesheet.css") }}>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
-
-</head>
-
-<body>
-  <header>
-    <h1>{{greeting}}</h1>
-    <h2>welcome to your to-do list</h2>
-    <h3>{{todays_date}} | {{todays_time}}</h3>
-
-  </header>
-
-  <main>
-
-
-    <div class="newtask">
-
-      <h2>Add a new task below</h2>
-
-      <form method="post" action="/taskadded">
-        Task title:
-        <input type="text" name="task_title" value="">
-        Task description:
-        <input type="text" name="task_desc" value="">
-        <input type="checkbox" name="checkbox" value="checked">Important
-        <input type="submit" value="Add task">
-      </form>
-
-      <ol>
-        <li>Task: {{task}} Importance: {{importance}}</li>
-      </ol>
-
-      <!-- <ol>
-    {% for item in task %}
-      <li>{{task}} </li>
-      <li> {{task}}</li>
+    <h2>Failing For loop:</h2>
+    <table>
+      <tr>
+        <th>Task </th>
+        <th>Description</th>
+        <th>Importance</th>
+      </tr>
+      {% for item in task %}
+      <tr>
+        <td> {{ item[0] }}</td>
+        <td> {{ item[1] }}</td>
+        <td> {{ item[2] }}</td>
+      </tr>
       {% endfor %}
-      </ol> -->
+      {% for item in task_desc %}
+      <tr>
+        <td> {{ item[0] }}</td>
+        <td> {{ item[1] }}</td>
+        <td> {{ item[2] }}</td>
+      </tr>
+      {% endfor %}
+      {% for item in importance %}
+      <tr>
+        <td> {{ item[0] }}</td>
+        <td> {{ item[1] }}</td>
+        <td> {{ item[2] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+</main>
 
-      <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important: {{importance}}</p>
-      <h2>Normal table:</h2>
-      <table>
-        <tr>
-          <th>Task </th>
-          <th>Description</th>
-          <th>Important</th>
-        </tr>
-
-        <tr>
-          <td> {{ task }}</td>
-          <td> {{ task_desc }}</td>
-          <td> {{ importance }}</td>
-        </tr>
-
-      </table>
-
-
-
-      <h2>Failing For loop:</h2>
-      <table>
-        <tr>
-          <th>Task </th>
-          <th>Description</th>
-          <th>Importance</th>
-        </tr>
-        {% for item in task %}
-        <tr>
-          <td> {{ item[0] }}</td>
-          <td> {{ item[1] }}</td>
-          <td> {{ item[2] }}</td>
-        </tr>
-        {% endfor %}
-        {% for item in task_desc %}
-        <tr>
-          <td> {{ item[0] }}</td>
-          <td> {{ item[1] }}</td>
-          <td> {{ item[2] }}</td>
-        </tr>
-        {% endfor %}
-        {% for item in importance %}
-        <tr>
-          <td> {{ item[0] }}</td>
-          <td> {{ item[1] }}</td>
-          <td> {{ item[2] }}</td>
-        </tr>
-        {% endfor %}
-      </table>
-  </main>
-
-</body>
-
-</html>
+{% endblock %}

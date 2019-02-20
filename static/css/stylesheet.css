@@ -93,3 +93,116 @@ h3 {
 form {
 	padding: 10px 0px;
 }
+
+
+
+
+
+
+
+
+/*--------------------------CALENDAR CSS-------------------------------------*/
+
+#cal {
+    font-size: 13px;
+    display:table;
+		width: 100%;
+		margin-bottom: 20px;
+}
+
+#cal .header {
+		height: 75px;
+    background: #6B717E;
+    color: #FFE8E1;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+#cal .header span {
+    display:inline;
+    line-height: 75px;
+}
+
+
+#cal .header span .button {
+
+    position: absolute;
+		width: 200px;
+}
+
+#cal .header span .button#next  {
+    right: 0;
+		top: 0;
+}
+
+#cal .header span .button#prev{
+	  left: 0;
+		top: 0;
+}
+
+
+#cal .header .button:hover {
+    background: #FFC4D1;
+		color: #6B717E;
+}
+
+#cal .header .month-year {
+	font-size: 20px;
+    letter-spacing: 1px;
+    width: 100%;
+    text-align: center;
+}
+
+#cal table {
+    background:#fff;
+    border-collapse:collapse;
+		width: 100%;
+}
+#cal td {
+    color:#2b2b2b;
+    width:30px;
+    height:45px;
+    line-height:45px;
+    text-align:center;
+    border:1px solid #e6e6e6;
+    cursor:default;
+}
+#cal #days td {
+    height:60px;
+    line-height: 60px;
+    text-transform:uppercase;
+    font-size:90%;
+    color:#9e9e9e;
+}
+#cal #days td:not(:last-child) {
+    border-right:1px solid #fff;
+}
+
+#cal #cal-frame td.today {
+    background:#ededed;
+    color:#8c8c8c;
+    box-shadow:1px 1px 0px #fff inset;
+    -moz-box-shadow:1px 1px 0px #fff inset;
+    -webkit-box-shadow:1px 1px 0px #fff inset;
+}
+#cal #cal-frame td:not(.nil):hover {
+    color:#6B717E;
+    background:#FFC4D1;
+}
+
+#cal #cal-frame td span {
+    font-size:80%;
+    position:relative;
+}
+#cal #cal-frame td span:first-child {
+    bottom:5px;
+}
+#cal #cal-frame td span:last-child {
+    top:5px;
+}
+
+#cal #cal-frame table.curr {
+    float:left;
+}
+#cal #cal-frame table.temp {
+    position:absolute;
+}

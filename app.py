@@ -3,6 +3,8 @@ from database import *
 import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
+import calendar
+from web_calendar import *
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -88,6 +90,24 @@ def index():
     else:
         greeting = 'good evening'
     return render_template("index.html", **locals())
+
+@app.route("/calendar")
+def calendar():
+    now = datetime.datetime.now()
+    current_month = now.strftime('%b')
+    current_day = now.strftime('d')
+    current_year = now.strftime('%Y')
+    if current_month == 'Feb':
+        calendar_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 28]
+    todays_date = now.strftime('%d-%m-%Y')
+    todays_time = now.strftime('%H:%M')
+    if now.hour < 12:
+        greeting = 'good morning'
+    elif now.hour >=12 and now.hour < 17:
+        greeting = 'good afternoon'
+    else:
+        greeting = 'good evening'
+    return render_template('calendar.html', **locals())
 
 
 #@app.route("/taskadded", methods = ["POST"])

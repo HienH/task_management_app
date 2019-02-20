@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Task manager app</title>
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> -->
+
+  <!-- Latest compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+Bootstrap core CSS -->
+  <link rel="script" href="/javascript/script.css">
+  <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/stylesheet.css") }}>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+</head>
+
+<body>
+  <header>
+    <h1>{{greeting}}</h1>
+    <h2>welcome to your to-do list</h2>
+    <h3>{{todays_date}} | {{todays_time}}</h3>
+  </header>
+  {% block content %}
+  {% endblock %}
+
+</body>
+</html>

@@ -13,7 +13,8 @@ app = Flask(__name__)
 cors = CORS(app)
 
 #---------Connect Flask to database----------------#
-app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testdb.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -25,7 +26,7 @@ connection = engine.connect()
 
 metadata = MetaData()  #initialise metadata object
 
-# mytable = Table("mytable", metadata, autoload=True, autoload_with=engine)
+# tasktable = Table("tasktable", metadata, autoload=True, autoload_with=engine)
 
 #--------Generation of DB--------------------#
 

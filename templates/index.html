@@ -5,7 +5,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title> Task manager app</title>
+  <title>Task manager app</title>
   <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> -->
 
   <!-- Latest compiled and minified CSS -->
@@ -26,12 +26,11 @@ Bootstrap core CSS -->
   <header>
     <h1>{{greeting}}</h1>
     <h2>welcome to your to-do list</h2>
-    <h3>{{todays_date}} | {{todays_time}}</h3>
+    <h3>{{current_date}} | {{current_time}}</h3>
 
   </header>
 
-<div class="
-    newtask">
+<div class="newtask">
 
   <h2>Add a new task below</h2>
 
@@ -44,6 +43,8 @@ Bootstrap core CSS -->
     Date: <input type="date" name="due_date">
     <input type="submit" value="Add task">
   </form>
+
+{{columns}}
 
   <!-- <ol>
     <li>Task: {{task}} Importance: {{importance}}</li>
@@ -132,7 +133,7 @@ Bootstrap core CSS -->
 
 =======
 
-      <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important: {{importance}}</p>
+      <!-- <p> Your task name was <strong>{{task}} </strong> and the description <strong>{{task_desc}} </strong> Important: {{importance}}</p>
       <h2>Normal table:</h2>
       <table>
         <tr>
@@ -180,9 +181,22 @@ Bootstrap core CSS -->
         </tr>
         {% endfor %}
       </table>
-  </main>
+  </main> -->
+
+  <section id='list-tasks'>
+
+  </section>
 
 
 </body>
+
+<script type="text/javascript">
+  url = 'http://127.0.0.1:5000/todos'
+
+  fetch(url)
+  .then(response => response.json())
+  .then(json =>document.getElementById('list-tasks').innerHTML=JSON.stringify(json))
+
+</script>
 
 </html>

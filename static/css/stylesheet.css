@@ -50,6 +50,9 @@ table {
 }
 
 /*--------------------------------CUSTOM CSS------------------------------------*/
+html {
+	height: 200vh;
+}
 
 body {
   text-align: center;

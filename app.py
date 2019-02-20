@@ -26,7 +26,7 @@ connection = engine.connect()
 
 metadata = MetaData()  #initialise metadata object
 
-# tasktable = Table("tasktable", metadata, autoload=True, autoload_with=engine)
+tasktable = Table("tasktable", metadata, autoload=True, autoload_with=engine)
 
 #--------Generation of DB--------------------#
 
@@ -41,7 +41,7 @@ class Tasktable(db.Model):
 
 #---------Database Add/remove/print data functions -------#
 
-stmt = 'SELECT * from mytable'
+stmt = 'SELECT * from tasktable'
 results_proxy = connection.execute(stmt)
 results = results_proxy.fetchall()
 
@@ -123,7 +123,17 @@ def delete_todo(id):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    now = datetime.datetime.now()
+    current_date = now.strftime('%d-%m-%Y')
+    current_time = now.strftime('%H:%M')
+    current_month = now.strftime('%B')
+    if now.hour < 12:
+        greeting = 'good morning'
+    elif now.hour >12 and now.hour < 17:
+        greeting = 'good afternoon'
+    else:
+        greeting = 'good evening'
+    return render_template("index.html", **locals())
 
 
 #---------HIEN JSON--------------------#

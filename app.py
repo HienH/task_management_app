@@ -48,15 +48,6 @@ results_proxy = connection.execute(stmt)
 results = results_proxy.fetchall()
 
 
-#--------- FLASK -------#
-
-
-
-# @app.route("/columns")
-# def display_columns():
-#     columns = table_columns()
-#     return render_template("index.html", **locals())
-
 #---------Taking user input from front end and ADDING  to db----------#
 @app.route("/addtask")
 def addtask():
@@ -73,8 +64,6 @@ def add_data():
     db.session.add(task_input)
     db.session.commit()
     return render_template("add_data.html", **locals())
-
-
 
 #---------Deletin from DB----------#
 @app.route("/delete", methods = ["DELETE"])

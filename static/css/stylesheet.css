@@ -101,6 +101,10 @@ form {
 	padding: 10px 0px;
 }
 
+#new-task-form {
+	display: none;
+}
+
 #new-task-form input{
 	display: block;
 	text-align: center;

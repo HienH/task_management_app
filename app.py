@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, select
-
+import json
 import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
@@ -39,21 +39,12 @@ class Tasktable(db.Model):
     date = db.Column('date', db.String)
 
 
-#---------Database Add/remove/print data functions -------#
+#----------Select and print data from db-----------#
 
-stmt = 'SELECT * from mytable'
+stmt = 'SELECT * from tasktable'
 results_proxy = connection.execute(stmt)
 results = results_proxy.fetchall()
 
-def table_columns():
-    columns = results[0].keys()
-    #print(columns)
-    return columns
-
-
-def print_tasks():
-    first_row = results[0]
-    return first_row
 
 #--------- FLASK -------#
 
@@ -62,25 +53,77 @@ def index():
     return render_template("index.html")
 
 
+
+#---------Taking user input from front end and ADDING  to db----------#
+@app.route("/addtask")
+def addtask():
+    task_input = "welcome"
+    all_tasks =  (', '.join(str(v) for v in results))
+    return render_template("add_data.html",**locals())
+
+#---------Display user added info on /complete route----------#
+
+@app.route("/complete", methods = ["POST"])
+def add_data():
+    all_tasks =  (', '.join(str(v) for v in results))
+    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
+    db.session.add(task_input)
+    db.session.commit()
+    return render_template("add_data.html", **locals())
+
+
+
+#---------Deletin from DB----------#
+@app.route("/delete", methods = ["POST"])
+def delete_data():
+    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
+    db.session.delete(task_input)
+    db.session.commit()
+    return render_template("remove_data.html", **locals())
+
+#----Display ALL db data-------#
+
+@app.route("/all_data")
+def display_ALL_DATA():
+    task_input = "ignore this but keep it!"
+    all_tasks =  (', '.join(str(v) for v in results))
+    return render_template("add_data.html", **locals())
+
+
+#---------RN Other finctions  -------#
+
 @app.route("/columns")
 def display_columns():
     columns = table_columns()
     return render_template("index.html", **locals())
 
-#---------Taking user input from front end and adding to db----------#
-@app.route("/addtask")
-def addtask():
-    return render_template("add_data.html")
 
-#---------Display user added info on /complete route----------#
-@app.route("/complete", methods = ["POST"])
-def add_data():
-    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
-    db.session.add(task_input)
-    db.session.commit()
-    return render_template("add_data.html", **locals())
-# print(result)
-#add_data()
+
+
+# form_data = request.form
+#     checkbox_result = request.form.getlist("checkbox")
+#     print(result)
+#     result2= "".join(result)
+#     print (result2)
+#     if result2 == "checked":
+#         importance = "yes"
+#     else:
+#         importance = "no"
+#     return render_template("index.html", **locals()) 
+#     # important = form_data["extras"]
+#     # if important == "checked":
+#     #     importance = "yes"
+#     # else:
+#     #     importance = "no"
+
+
+
+
+
+
+
+
+
 
 #----------------HIEN---------------#
 

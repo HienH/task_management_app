@@ -57,3 +57,6 @@ def print_all_data():
 # print(results)
 
 # # to check our SQL command do print(stmt)
+
+#-----Inserting data------#
+ins = 

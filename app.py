@@ -1,42 +1,82 @@
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, select
 
-
-from db_functions import *
 import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
+
 
 app = Flask(__name__)
 cors = CORS(app)
 
 #---------Connect Flask to database----------------#
-app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:///taskmanager.db'
+app.config['SQLALCHEMY_DATABASE URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# db = sqlalchemy(app)
+db = sqlalchemy(app)
 
-todos = [
-        { "id": 0,
-         "title": "First Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-         "date": "01-01-2019"
-         }, {
-         "id": 1,
-         "title": "First Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-   
-       "date": "03-02-2019"},
-          {
-         "id": 2,
-         "title": "third Task",
-         "description": "this is the third description",
-         "important": 1,
-         "status": 1,
-         "date": "02-02-2019"},
-        ]
+engine = create_engine('sqlite:///testdb.db')
 
+#Connect to DB
+connection = engine.connect()
+
+metadata = MetaData()  #initialise metadata object
+
+mytable = Table("mytable", metadata, autoload=True, autoload_with=engine) 
+
+#--------Generation of DB--------------------#
+
+class mytable(db.Model):
+    # __tablename__ = 'mytable'   CHECK THIS
+    id = db.Column('id', db.Integer, primary_key=True)
+    age = db.Column('age', db.Integer)
+    name = db.Column('name', db.String)
+
+
+#---------Databse Add/remove/print data functions -------#
+
+stmt = 'SELECT * from mytable' 
+results_proxy = connection.execute(stmt)
+results = results_proxy.fetchall()
+
+def table_columns():
+    columns = results[0].keys()
+    #print(columns) 
+    return columns
+
+    
+def print_tasks():
+    first_row = results[0]
+    return first_row
+
+#--------- FLASK -------#
+@app.route("/columns")   
+def display_columns():
+    columns = table_columns()
+    return render_template("index.html", **locals())
+
+
+@app.route("/addtask")
+def addtask():
+    return render_template("add_data.html")
+
+@app.route("/complete", methods = ["POST"])
+def add_data():
+    task_title = mytable(name=request.form["task_title"])
+    db.session.add(task_title)
+    db.session.commit()
+    # form_data = request.form
+    # task = form_data["task_title"]
+    # ins = mytable.insert().values(task)
+    # result = connection.execute(ins)
+    return render_template("add_data.html", **locals())
+# print(result)
+#add_data()
+
+#----------------HIEN---------------#
 
 @app.route('/todos',methods = ['GET','POST'])
 def alltodos():
@@ -83,20 +123,42 @@ def index():
     return render_template("index.html")
     
  
-#@app.route("/taskadded", methods = ["POST"])
-#def add_task():
-#    
-#   
-#    
-#    return render_template("index.html", **locals()) 
-#    # important = form_data["extras"]
-#    # if important == "checked":
-#    #     importance = "yes"
-#    # else:
-#    #     importance = "no"
-#    #    
-#
+#---------HIEN JSON--------------------#
+todos = [
+        { "id": 0,
+         "title": "First Task",
+         "description": "this is the first description",
+         "important": 0,
+         "status": 0,
+         "date": "01-01-2019"
+         }, {
+         "id": 1,
+         "title": "First Task",
+         "description": "this is the first description",
+         "important": 0,
+         "status": 0,
+   
+       "date": "03-02-2019"},
+          {
+         "id": 2,
+         "title": "third Task",
+         "description": "this is the third description",
+         "important": 1,
+         "status": 1,
+         "date": "02-02-2019"},
+        ]
 
+
+
+#---------Databse TEST functions-------#
+def check_db():
+    try:
+        print(engine.table_names())
+        print(repr(mytable))
+        print("Database connected")
+    except Exception as e:
+        print(e)    
+#check_db()
 
 
 if __name__ == "__main__":

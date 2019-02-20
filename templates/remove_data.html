@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+<!-- LINKS -->
+<title>REMOVING DATA</title>
+</head>
+
+
+<body>
+<h1>Deleting data</h1>
+
+    <form method = "post" action="/delete">
+        Task ID:
+        <input type="text" name="task_id" value="">
+        Task title:
+        <input type="text" name="task_title" value="">
+        Task Description:
+        <input type="text" name="description" value="">
+    Importance:
+        <input type="checkbox" name="checkbox" value="checked">
+           <input type="submit" value="Add task">
+      </form>
+
+
+<h2>You chose to remove data></h2>
+
+  <p> The  task you removed was {{ task_input.id }}, task Title:  <strong>{{ task_input.title }} </strong> and the description <strong>{{ task_input.description }} </strong> </p>
+
+<p>This is left in the database:</p>
+  <!-- Important: {{ important }} -->
+  {{ all_tasks }}
+</body>
+
+</html>

@@ -58,9 +58,6 @@ def print_tasks():
 
 #--------- FLASK -------#
 
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
 
 
 # @app.route("/columns")

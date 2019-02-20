@@ -74,7 +74,7 @@ def add_data():
 
 
 #---------Deletin from DB----------#
-@app.route("/delete", methods = ["POST"])
+@app.route("/delete", methods = ["DELETE"])
 def delete_data():
     task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
     db.session.delete(task_input)
@@ -96,28 +96,6 @@ def display_ALL_DATA():
 def display_columns():
     columns = table_columns()
     return render_template("index.html", **locals())
-
-
-
-
-# form_data = request.form
-#     checkbox_result = request.form.getlist("checkbox")
-#     print(result)
-#     result2= "".join(result)
-#     print (result2)
-#     if result2 == "checked":
-#         importance = "yes"
-#     else:
-#         importance = "no"
-#     return render_template("index.html", **locals()) 
-#     # important = form_data["extras"]
-#     # if important == "checked":
-#     #     importance = "yes"
-#     # else:
-#     #     importance = "no"
-
-
-
 
 
 
@@ -222,3 +200,27 @@ check_db()
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+# form_data = request.form
+#     checkbox_result = request.form.getlist("checkbox")
+#     print(result)
+#     result2= "".join(result)
+#     print (result2)
+#     if result2 == "checked":
+#         importance = "yes"
+#     else:
+#         importance = "no"
+#     return render_template("index.html", **locals()) 
+#     # important = form_data["extras"]
+#     # if important == "checked":
+#     #     importance = "yes"
+#     # else:
+#     #     importance = "no"
+
+
+
+
+
+

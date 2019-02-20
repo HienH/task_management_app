@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+<!-- LINKS -->
+<title>ADDING DATA</title>
+</head>
+
+
+<body>
+
+   <p> Here are the task table columns: {{ columns }}</p>
+
+   <p>  Here is the first row of tasks:
+
+{{ first_row }}</p>
+
+
+
+<form method = "post" action="/complete">
+    Task title:
+    <input type="text" name="task_title" value="">
+       <input type="submit" value="Add task">
+  </form> 
+  
+
+  <p> Your task name was <strong>{{ task_title }} </strong> and the description <strong>{{ task_desc }} </strong> Important: {{ important }}</p>
+
+  {{ checkbox_result2 }}
+
+  {{ result }}
+</body>
+
+</html>

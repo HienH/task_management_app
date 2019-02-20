@@ -20,16 +20,21 @@
 
 
 <form method = "post" action="/complete">
+    Task ID:
+    <input type="text" name="task_id" value="">
     Task title:
     <input type="text" name="task_title" value="">
+    Task Description:
+    <input type="text" name="description" value="">
+
        <input type="submit" value="Add task">
   </form> 
   
 
-  <p> Your task name was <strong>{{ task_title }} </strong> and the description <strong>{{ task_desc }} </strong> Important: {{ important }}</p>
+  <p> Your task ID was {{ task_input.id }}, task Title:  <strong>{{ task_input.title }} </strong> and the description <strong>{{ task_input.description }} </strong> </p>
 
-  {{ checkbox_result2 }}
 
+  <!-- Important: {{ important }} -->
   {{ result }}
 </body>
 

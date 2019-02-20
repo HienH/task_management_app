@@ -56,25 +56,28 @@ def print_tasks():
     return first_row
 
 #--------- FLASK -------#
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
 @app.route("/columns")
 def display_columns():
     columns = table_columns()
     return render_template("index.html", **locals())
 
-
+#---------Taking user input from front end and adding to db----------#
 @app.route("/addtask")
 def addtask():
     return render_template("add_data.html")
 
+#---------Display user added info on /complete route----------#
 @app.route("/complete", methods = ["POST"])
 def add_data():
-    task_title = Tasktable(title=request.form["task_title"])
-    db.session.add(task_title)
+    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
+    db.session.add(task_input)
     db.session.commit()
-    # form_data = request.form
-    # task = form_data["task_title"]
-    # ins = mytable.insert().values(task)
-    # result = connection.execute(ins)
     return render_template("add_data.html", **locals())
 # print(result)
 #add_data()
@@ -121,9 +124,7 @@ def delete_todo(id):
 #    return jsonify(todos)
 #
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+
 
 
 #---------HIEN JSON--------------------#

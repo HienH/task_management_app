@@ -65,6 +65,19 @@ def display_all():
 #---------Taking user input from front end and ADDING  to db----------#
 @app.route("/")
 def addtask():
+    #Datetime info for header
+    now = datetime.datetime.now()
+    current_date = now.strftime('%d-%m-%Y')
+    current_time = now.strftime('%H:%M')
+    current_month = now.strftime('%B')
+
+    #Displaying specific greeting based on datetime info
+    if now.hour < 12:
+        greeting = 'good morning'
+    elif now.hour >12 and now.hour < 17:
+        greeting = 'good afternoon'
+    else:
+        greeting = 'good evening'
     results = display_all()
     # for row in results:
     #     print(row)

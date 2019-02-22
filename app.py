@@ -41,6 +41,14 @@ class Tasktable(db.Model):
     date = db.Column('date', db.String)
 
 
+def __init__(self, id, title, description, important, status, date):
+    self.id = id
+    self.title = title
+    self.description = description
+    self.important = important
+    self.status = status
+    self.date = date
+
 #----------Select and print data from db-----------#
 
 stmt = 'SELECT * from tasktable'
@@ -49,45 +57,68 @@ results = results_proxy.fetchall()
 
 
 #---------Taking user input from front end and ADDING  to db----------#
-@app.route("/addtask")
-def addtask():
-    task_input = "welcome"
-    all_tasks =  (', '.join(str(v) for v in results))
-    return render_template("add_data.html",**locals())
+# @app.route("/addtask")
+# def addtask():
+#     task_input = "welcome"
+#     all_tasks =  (', '.join(str(v) for v in results))
+#     return render_template("add_data.html",**locals())
 
 #---------Display user added info on /complete route----------#
 
-@app.route("/complete", methods = ["POST"])
+# @app.route("/complete", methods = ["POST"])
+# def add_data():
+#     all_tasks =  (', '.join(str(v) for v in results))
+#     task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
+#     db.session.add(task_input)
+#     db.session.commit()
+#     return render_template("add_data.html", **locals())
+
+# #---------Deletin from DB----------#
+# @app.route("/delete", methods = ["DELETE"])
+# def delete_data():
+#     task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
+#     db.session.delete(task_input)
+#     db.session.commit()
+#     return render_template("remove_data.html", **locals())
+
+# #----RN New functions-------#
+
+# @app.route("/all_data")
+# def display_ALL_DATA():
+#     task_input = "ignore this but keep it!"
+#     all_tasks =  (', '.join(str(v) for v in results))
+#     return render_template("add_data.html", **locals())
+
 def add_data():
-    all_tasks =  (', '.join(str(v) for v in results))
-    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
-    db.session.add(task_input)
+    addme = Tasktable(id=2,title=("secondtid"), description="randomdesc", important=0, status=0, date="a date")
+    db.session.add(addme)
     db.session.commit()
-    return render_template("add_data.html", **locals())
+    
 
-#---------Deletin from DB----------#
-@app.route("/delete", methods = ["DELETE"])
-def delete_data():
-    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
-    db.session.delete(task_input)
+def delete_data(id):
+    deleteme = Tasktable.query.filter_by(id=id).first()
+    db.session.delete(deleteme)
     db.session.commit()
-    return render_template("remove_data.html", **locals())
-
-#----Display ALL db data-------#
-
-@app.route("/all_data")
-def display_ALL_DATA():
-    task_input = "ignore this but keep it!"
-    all_tasks =  (', '.join(str(v) for v in results))
-    return render_template("add_data.html", **locals())
 
 
-#---------RN Other finctions  -------#
+def update_data(id):
+    updateme = Tasktable.query.filter_by(id=id).first()
+    updateme.title = "changed"
+    db.session.commit()
+  
 
-@app.route("/columns")
-def display_columns():
-    columns = table_columns()
-    return render_template("index.html", **locals())
+def display_all():
+    stmt = 'SELECT * from tasktable'
+    results_proxy = connection.execute(stmt)
+    results = results_proxy.fetchall()
+    for row in results:
+        print(row)
+display_all()
+
+
+
+
+
 
 #----------------HIEN---------------#
 
@@ -194,7 +225,7 @@ def check_db():
         print("Database connected")
     except Exception as e:
         print(e)
-check_db()
+#check_db()
 
 
 if __name__ == "__main__":

@@ -47,10 +47,34 @@
     <input type="text" name="task_title" value="">
     Task Description:
     <input type="text" name="task_description" value="">
-  <input type="checkbox" name="checkbox" value="important">Important
+    Important
+  <input type="checkbox" name="checkbox" value="important">
+  Status
+  <input type="checkbox" name="status" value="unfinished">
+  Due date
+  <input type="text" name="task_date" value="">
     <input type="submit" value="Add task">
+
   </form> 
   
+
+  <form method = "post" action="/deleted">
+    Task ID:
+    <input type="text" name="task_id" value="">
+    Task title:
+    <input type="text" name="task_title" value="">
+    Task Description:
+    <input type="text" name="task_description" value="">
+    <!-- Important
+  <input type="checkbox" name="checkbox" value="important">
+  Status
+  <input type="checkbox" name="status" value="unfinished"> -->
+  Due date
+  <input type="text" name="task_date" value="">
+   
+    <input type="submit" value="Delete task">
+  </form> 
+
   <h3 class='home-page-h3'>To-Do List</h3>
 
   <table>

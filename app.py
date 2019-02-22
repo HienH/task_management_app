@@ -87,7 +87,7 @@ def addtask():
 
 @app.route("/added", methods = ["POST"])
 def add_tasks():
-    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["task_description"], important=request.form["checkbox"])
+    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["task_description"], important=request.form["checkbox"], status=request.form["status"], date=request.form["task_date"])
     db.session.add(task_input)
     db.session.commit()
     results = display_all()
@@ -95,13 +95,15 @@ def add_tasks():
 
    
 
-# #---------Deletin from DB----------#
-# @app.route("/delete", methods = ["DELETE"])
-# def delete_data():
-#     task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
-#     db.session.delete(task_input)
-#     db.session.commit()
-#     return render_template("remove_data.html", **locals())
+#---------Deletin from DB----------#
+@app.route("/deleted", methods = ["POST"])
+def delete_data():
+    deleteme = Tasktable.query.filter_by(id=request.form["task_id"]).first()
+    db.session.delete(deleteme)
+    db.session.commit()
+    results = display_all()
+    return render_template("RNindex.html", **locals())
+
 
 # #----ADD/UPDATE/DELET from database -------#
 
@@ -118,10 +120,6 @@ def add_data():
 
 #add_data()   
 
-def delete_data(id):
-    deleteme = Tasktable.query.filter_by(id=id).first()
-    db.session.delete(deleteme)
-    db.session.commit()
 
 #delete_data(5)
 

@@ -51,27 +51,36 @@ def __init__(self, id, title, description, important, status, date):
 
 #----------Select and print data from db-----------#
 
-stmt = 'SELECT * from tasktable'
-results_proxy = connection.execute(stmt)
-results = results_proxy.fetchall()
+# stmt = 'SELECT * from tasktable'
+# results_proxy = connection.execute(stmt)
+# results = results_proxy.fetchall()
 
-
+#---------Display ALL data -------#
+def display_all():
+    connection = engine.connect()
+    stmt = 'SELECT * from tasktable'
+    results_proxy = connection.execute(stmt)
+    results = results_proxy.fetchall()
+    return results
 #---------Taking user input from front end and ADDING  to db----------#
-# @app.route("/addtask")
-# def addtask():
-#     task_input = "welcome"
-#     all_tasks =  (', '.join(str(v) for v in results))
-#     return render_template("add_data.html",**locals())
+@app.route("/")
+def addtask():
+    results = display_all()
+    # for row in results:
+    #     print(row)
+    return render_template("RNindex.html",**locals())
 
 #---------Display user added info on /complete route----------#
 
-# @app.route("/complete", methods = ["POST"])
-# def add_data():
-#     all_tasks =  (', '.join(str(v) for v in results))
-#     task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["description"])
-#     db.session.add(task_input)
-#     db.session.commit()
-#     return render_template("add_data.html", **locals())
+@app.route("/added", methods = ["POST"])
+def add_tasks():
+    task_input = Tasktable(id=request.form["task_id"], title=request.form["task_title"], description=request.form["task_description"], important=request.form["checkbox"])
+    db.session.add(task_input)
+    db.session.commit()
+    results = display_all()
+    return render_template("RNindex.html", **locals())
+
+   
 
 # #---------Deletin from DB----------#
 # @app.route("/delete", methods = ["DELETE"])
@@ -90,10 +99,11 @@ results = results_proxy.fetchall()
 #     return render_template("add_data.html", **locals())
 
 def add_data():
-    addme = Tasktable(id=2,title=("secondtid"), description="randomdesc", important=0, status=0, date="a date")
+    addme = Tasktable(id=1,title=("firstid"), description="randomdesc", important=0, status=0, date="a date")
     db.session.add(addme)
     db.session.commit()
-    
+
+#add_data()   
 
 def delete_data(id):
     deleteme = Tasktable.query.filter_by(id=id).first()
@@ -107,15 +117,9 @@ def update_data(id):
     updateme.title = "changed"
     db.session.commit()
   
-#---------Display ALL data -------#
-def display_all():
-    stmt = 'SELECT * from tasktable'
-    results_proxy = connection.execute(stmt)
-    results = results_proxy.fetchall()
-    for row in results:
-        print(row)
 
-display_all()
+
+#display_all()
 
 
 #---------Databse TEST functions-------#
@@ -132,101 +136,17 @@ def check_db():
 
 
 
-#----------------HIEN---------------#
 
-@app.route('/todos',methods = ['GET','POST'])
-def alltodos():
-    if request.method == 'GET':
-        return jsonify(todos)
-
-    if request.method == 'POST':
-        form_data = request.form
-        result = request.form.getlist("checkbox")
-        if result != []:
-            result = 1
-        else:
-            result= 0
-        todo = {
-            'id' : todos[-1]['id'] + 1,
-            'title' : form_data["task_title"],
-            'description' : form_data["task_desc"],
-            'important' : result,
-            'status' : 0,
-            'date' :form_data["due_date"]
-        }
-        todos.append(todo)
-        return jsonify(todos)
 
 #GET INDIVIUDAL TASK API
 
-@app.route('/todos/<int:id>', methods=['DELETE'])
-def delete_todo(id):
-    todo =[todo for todo in todos if todo["id"]== id]
-    todos.remove(todo[0])
-    return jsonify(todos)
 
 
 
 
-@app.route("/", methods=['GET', 'POST'])
-def index():
-    #Datetime info for header
-    now = datetime.datetime.now()
-    current_date = now.strftime('%d-%m-%Y')
-    current_time = now.strftime('%H:%M')
-    current_month = now.strftime('%B')
 
-    #Displaying specific greeting based on datetime info
-    if now.hour < 12:
-        greeting = 'good morning'
-    elif now.hour >12 and now.hour < 17:
-        greeting = 'good afternoon'
-    else:
-        greeting = 'good evening'
-
-    #Displaying tasks in table
-    url = 'http://127.0.0.1:5000/todos'
-    response = requests.get(url)
-    data = response.json()
-    for item in data:
-        if item['important'] == 0:
-            importance = 'no'
-        else:
-            importance = 'yes'
-    return render_template("index.html", **locals())
-
-#---------HIEN JSON--------------------#
-todos = [
-        { "id": 0,
-         "title": "First Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-         "date": "01-01-2019"
-         },
-
-         {
-         "id": 1,
-         "title": "Second Task",
-         "description": "this is the first description",
-         "important": 0,
-         "status": 0,
-         "date": "03-02-2019"},
-
-         {
-         "id": 2,
-         "title": "third Task",
-         "description": "this is the third description",
-         "important": 1,
-         "status": 1,
-         "date": "02-02-2019"},
-        ]
-
-
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 

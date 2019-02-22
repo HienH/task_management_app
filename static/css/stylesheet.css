@@ -150,6 +150,8 @@ form {
 	padding: 10px 0px;
 }
 
+thead th {font-weight: bold; border: solid;}
+td {padding: 5px;}
 
 #new-task-form {
 	display: none;

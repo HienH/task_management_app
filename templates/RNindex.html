@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+<!-- LINKS -->
+<title>tESTING DB</title>
+<link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/style.css") }}>
+
+  <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/stylesheet.css") }}>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+
+</head>
+
+
+<body>
+        <header>
+                <nav>
+                  <ul>
+                    <li><img src="../static/images/logo.png" alt="company logo"></li>
+                    <li><a href="#footer">contact us</a></li>
+                  </ul>
+                </nav>
+                <img src="../static/images/logo.png" alt="company logo">
+                <div id="headers">
+            
+                  <h1>{{greeting}}</h1>
+                  <h2>welcome to your to-do list</h2>
+                  <h3>{{current_date}} | {{current_time}}</h3>
+                </div>
+              </header>
+
+        <!-- <p>Here are the list of tasks  in the db:  {{ results }}</p> -->
+
+ 
+        
+
+
+
+
+<form method = "post" action="/added">
+    Task ID:
+    <input type="text" name="task_id" value="">
+    Task title:
+    <input type="text" name="task_title" value="">
+    Task Description:
+    <input type="text" name="task_description" value="">
+  <input type="checkbox" name="checkbox" value="important">Important
+    <input type="submit" value="Add task">
+  </form> 
+  
+  <h3 class='home-page-h3'>To-Do List</h3>
+
+  <table>
+        <thead>
+          <tr>
+            <th scope="col">Task ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Importance</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date</th>
+           
+          </tr>
+        </thead>
+      
+      
+          <tbody>
+          {% for res in results %}
+              <tr>
+                  <td>{{ res[0] }}</td>
+                  <td>{{ res[1] }}</td>
+                  <td>{{ res[2] }}</td>
+                  <td>{{ res[3] }}</td>
+                  <td>{{ res[4] }}</td>
+                  <td>{{ res[5] }}</td>
+                  <td>{{ res[6] }}</td>
+                  <td>{{ res[7] }}</td>
+              </tr>
+          {% endfor %}
+          </tbody>
+              </table>
+
+
+              <footer id='footer'>
+                    <p>An app developed by Roksana, Hien and Ellen as part of the BT FurTHER program 2019 :) </p>
+                  </footer>
+
+</body>
+
+</html>

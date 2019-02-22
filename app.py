@@ -81,7 +81,7 @@ results = results_proxy.fetchall()
 #     db.session.commit()
 #     return render_template("remove_data.html", **locals())
 
-# #----RN New functions-------#
+# #----ADD/UPDATE/DELET from database -------#
 
 # @app.route("/all_data")
 # def display_ALL_DATA():
@@ -100,21 +100,33 @@ def delete_data(id):
     db.session.delete(deleteme)
     db.session.commit()
 
+#delete_data(5)
 
 def update_data(id):
     updateme = Tasktable.query.filter_by(id=id).first()
     updateme.title = "changed"
     db.session.commit()
   
-
+#---------Display ALL data -------#
 def display_all():
     stmt = 'SELECT * from tasktable'
     results_proxy = connection.execute(stmt)
     results = results_proxy.fetchall()
     for row in results:
         print(row)
+
 display_all()
 
+
+#---------Databse TEST functions-------#
+def check_db():
+    try:
+        print(engine.table_names())
+        print(repr(tasktable))
+        print("Database connected")
+    except Exception as e:
+        print(e)
+#check_db()
 
 
 
@@ -154,12 +166,7 @@ def delete_todo(id):
     return jsonify(todos)
 
 
-#@app.route('/todos/<int:id>', methods=['PUT'])
-#def update_todo(id):
-#    todo =[todo for todo in todos if todo["id"]== id]
-#    todos.remove(todo[0])
-#    return jsonify(todos)
-#
+
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -217,19 +224,9 @@ todos = [
 
 
 
-#---------Databse TEST functions-------#
-def check_db():
-    try:
-        print(engine.table_names())
-        print(repr(tasktable))
-        print("Database connected")
-    except Exception as e:
-        print(e)
-#check_db()
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)
 
 
 
